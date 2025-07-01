@@ -1,13 +1,17 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { IoIosSearch } from "react-icons/io";
 import { FaMinus } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa";
 import { FaRegTrashCan } from "react-icons/fa6";
 import { Link } from "react-router-dom";
+import ProductOrder from "./ProductOrder.jsx";
+import { PanierContext } from "../store/panier-context.jsx";
 
-export default function Header() {
+export default function Header({products, setProducts}) {
   const [showCart, setShowCart] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
+
+  const {items} = useContext(PanierContext);
 
   const toggleCart = () => {
     setShowCart(!showCart);
@@ -26,9 +30,10 @@ export default function Header() {
           </div>
           <div className="icon-container">
             <div className="user-menu-container" onClick={() => setShowUserMenu(!showUserMenu)}>
-              <i class="fa-regular fa-user"></i>
+              <i className="fa-regular fa-user"></i>
             </div>
-            <i class="fi fi-rr-shopping-cart" onClick={toggleCart}></i>
+            <button>Panier ({items.length})</button>
+            <i className="fi fi-rr-shopping-cart" onClick={toggleCart}></i>
 
             {showUserMenu && (
               <div className="user-dropdown">
@@ -53,46 +58,22 @@ export default function Header() {
             <h3>Produits</h3>
             <hr />
             <div className="product-cart-card">
-              <img src="src/images/Untitled_design__2___3_-removebg-preview.png" alt="tee-shirt" />
-              <div className="column">
-                <div>
-                  <h3>Lorem ipsum</h3>
-                  <h4>Lorem ipsum</h4>
-                  <span>15.99€</span>
-                </div>
-                <div className="prod-controls">
-                  <div className="btn-prod">
-                    <FaMinus />
-                    <span>1</span>
-                    <FaPlus />
-                  </div>
-                  <FaRegTrashCan size={"1.5rem"} />
-                </div>
-              </div>
-              <span className="price">15.99€</span>
+                 {products && products.map((p)  => 
+                   <ProductOrder product={p} key={p.id}/>
+                  )
+              
+                 }
+           
+             
+       
             </div>
-            <hr />
+           
             <div className="product-cart-card">
-              <img src="src/images/Untitled_design__3_-removebg-preview.png" alt="tee-shirt" />
-              <div className="column">
-                <div>
-                  <h3>Lorem ipsum</h3>
-                  <h4>Lorem ipsum</h4>
-                  <span>15.99€</span>
-                </div>
-                <div className="prod-controls">
-                  <div className="btn-prod">
-                    <FaMinus />
-                    <span>1</span>
-                    <FaPlus />
-                  </div>
-                  <FaRegTrashCan size={"1.5rem"} />
-                </div>
-              </div>
-              <span className="price">15.99€</span>
+              
+              
+              
             </div>
-            <hr />
-            <button>Paiement - 31.98€ EUR</button>
+          
           </div>
         </>
       )}

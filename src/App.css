@@ -244,6 +244,7 @@ form {
     position: relative;
 
     display: flex;
+    flex-direction: column;
     gap: 2rem;
     margin-top: 2rem;
     margin-bottom: 2rem;
@@ -346,4 +347,10 @@ form {
       position: absolute;
       top: 0;
       right: 0;
+}
+
+
+
+.cardOrder {
+  display: flex;
 }
